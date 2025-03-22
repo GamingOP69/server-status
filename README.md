@@ -48,4 +48,3 @@ This project monitors the status of various servers and websites, sending email 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
