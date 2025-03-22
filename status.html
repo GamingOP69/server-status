@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Server Monitor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script>
+        function refreshData() {
+            fetch(window.location.href)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const newDoc = parser.parseFromString(data, 'text/html');
+                    document.querySelector('tbody').innerHTML = newDoc.querySelector('tbody').innerHTML;
+                    document.querySelector('.last-updated').innerHTML = newDoc.querySelector('.last-updated').innerHTML;
+                });
+        }
+        
+        setInterval(refreshData, 60000);
+    </script>
+    <style>
+        :root {
+            --online: #2ecc71;
+            --offline: #e74c3c;
+            --background: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .status-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #3d3d3d;
+        }
+
+        th {
+            background-color: #333333;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        .online { background-color: var(--online); }
+        .offline { background-color: var(--offline); }
+
+        .latency {
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            70% { transform: scale(1.1); opacity: 0.4; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            th, td { padding: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Game Server Monitor</h1>
+        </div>
+        
+        <div class="status-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Server</th>
+                        <th>Status</th>
+                        <th>Latency</th>
+                        <th>Address</th>
+                        <th>Last Check</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td>Hypixel</td>
+            <td>
+                <span class="status-indicator online"></span>
+                Online
+            </td>
+            <td>42.0ms</td>
+            <td>mc.hypixel.net:25565</td>
+            <td>17:50:06</td>
+        </tr>
+        
+        <tr>
+            <td>FakePixel</td>
+            <td>
+                <span class="status-indicator online"></span>
+                Online
+            </td>
+            <td>92.37ms</td>
+            <td>mc.fakepixel.fun:25565</td>
+            <td>17:50:06</td>
+        </tr>
+        
+        <tr>
+            <td>Blocksmc</td>
+            <td>
+                <span class="status-indicator online"></span>
+                Online
+            </td>
+            <td>178.71ms</td>
+            <td>play.blocksmc.com:25565</td>
+            <td>17:50:06</td>
+        </tr>
+        
+        <tr>
+            <td>Discord</td>
+            <td>
+                <span class="status-indicator online"></span>
+                Online
+            </td>
+            <td>14.0ms</td>
+            <td>discord.com:80</td>
+            <td>17:50:06</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+        
+        <p class="last-updated">
+            Last updated: 2025-03-22 17:50:06 | 
+            Uptime: 0:30:07
+        </p>
+    </div>
+</body>
+</html>
