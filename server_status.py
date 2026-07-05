@@ -42,6 +42,10 @@ EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD', '')
 DISCORD_ENABLED = os.getenv('DISCORD_ENABLED', 'false').lower() == 'true'
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL', '')
 
+# Web Server Configuration
+HOST = os.getenv('HOST', '0.0.0.0')      # Bind to all interfaces by default
+PORT = int(os.getenv('PORT', '8000'))
+
 # Configure logging
 logging.basicConfig(
     filename=LOG_FILE,
@@ -50,7 +54,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-# Also log to console for immediate feedback
+# Also log to console
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 console.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s', '%H:%M:%S'))
@@ -66,10 +70,12 @@ class CustomHandler(SimpleHTTPRequestHandler):
         except (ConnectionAbortedError, BrokenPipeError):
             pass
 
-def run_web_server(port=8000):
-    server_address = ('', port)
+def run_web_server():
+    server_address = (HOST, PORT)
     httpd = ThreadingHTTPServer(server_address, CustomHandler)
-    logging.info(f"Web server running on http://localhost:{port}/status.html")
+    logging.info(f"Web server running on http://{HOST}:{PORT}/status.html")
+    if HOST == '0.0.0.0':
+        logging.info(f"Access from other machines using your LAN IP or public IP")
     httpd.serve_forever()
 
 # ----------------------------------------------------------------------
@@ -159,7 +165,7 @@ Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         if not DISCORD_ENABLED or not DISCORD_WEBHOOK_URL:
             return
 
-        import requests  # lazy import to avoid requirement if not used
+        import requests  # lazy import
 
         server_name = server['name']
         status_text = "✅ ONLINE" if status else "🔴 OFFLINE"
