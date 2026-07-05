@@ -1,93 +1,99 @@
 # Server Status Monitor
 
-Monitor the health of game servers and websites with real‑time checks, email alerts, and Discord notifications.
+Monitor the health and availability of game servers and websites with real-time monitoring, email notifications, and Discord alerts.
 
 ## Features
 
-- **Real‑time status checks** – pings servers every 60 seconds (configurable).
-- **Email alerts** – sends notifications when a server goes online/offline.
-- **Discord webhook** – posts alerts to any Discord channel.
-- **Uptime percentage** – shows 24‑hour uptime for each server.
-- **Live status page** – auto‑refreshes with latency, last check time, and uptime.
-- **Easy configuration** – all servers in `servers.json`, credentials in `.env`.
+- **Real-time status checks** – Monitors servers every 60 seconds (configurable).
+- **Email alerts** – Sends notifications when a server goes online or offline.
+- **Discord webhook support** – Posts status updates to any Discord channel.
+- **Uptime tracking** – Displays the 24-hour uptime percentage for each server.
+- **Live status page** – Automatically refreshes with server status, latency, and the last check time.
+- **Easy configuration** – Configure servers and credentials using `servers.json` and `.env`.
 
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/GamingOP69/server-status.git
    cd server-status
-```
+   ```
 
 2. Create and activate a virtual environment:
+
    ```bash
    python -m venv venv
-   source venv/bin/activate      # On Windows: venv\Scripts\activate
+
+   # Linux / macOS
+   source venv/bin/activate
+
+   # Windows
+   venv\Scripts\activate
    ```
-3. Install dependencies:
+
+3. Install the required dependencies:
+
    ```bash
    pip install -r requirements.txt
    ```
-4. Copy the environment template and fill in your credentials:
+
+4. Copy the example environment file and configure it:
+
    ```bash
    cp .env.example .env
-   # Edit .env with your email and Discord settings
    ```
 
-Usage
+   Then edit the `.env` file and add your email and Discord credentials.
 
-1. Edit servers.json to add the servers you want to monitor (name, IP, port).
-2. Run the monitor:
+## Usage
+
+1. Edit `servers.json` and add the servers or websites you want to monitor.
+2. Start the monitor:
+
    ```bash
    python server_status.py
    ```
-3. Open the status page at http://localhost:8000/status.html.
 
-Configuration
+3. Open the live status page in your browser:
 
-Servers (servers.json)
+   ```
+   http://localhost:8000/status.html
+   ```
 
-Each entry must contain:
+## Configuration
 
-· name – display name
-· ip – hostname or IP address
-· port – port number
+### `servers.json`
 
-Example:
+Configure the servers you want to monitor.
 
-```json
-{
-    "servers": [
-        { "name": "Hypixel", "ip": "mc.hypixel.net", "port": 25565 }
-    ]
-}
-```
+Example fields:
 
-Environment Variables (.env)
+- `name`
+- `ip`
+- `port`
+- `type` *(optional)*
 
-Variable Description
-EMAIL_ENABLED true/false
-EMAIL_FROM Sender email address
-EMAIL_TO Recipient email address
-EMAIL_PASSWORD App password for SMTP (Gmail)
-DISCORD_ENABLED true/false
-DISCORD_WEBHOOK_URL Discord webhook URL
-CHECK_INTERVAL Seconds between checks (default: 60)
+### `.env`
 
-Example .env:
+Configure application settings:
 
-```ini
-EMAIL_ENABLED=true
-EMAIL_FROM=your_email@gmail.com
-EMAIL_TO=recipient@example.com
-EMAIL_PASSWORD=your_app_password
-DISCORD_ENABLED=true
-DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
-CHECK_INTERVAL=60
-```
+**Email**
 
-⚠️ Gmail users: Use an App Password – not your normal password.
+- `EMAIL_ENABLED`
+- `EMAIL_FROM`
+- `EMAIL_TO`
+- `EMAIL_PASSWORD`
 
-License
+**Discord**
 
-This project is licensed under the MIT License – see the LICENSE file for details.
+- `DISCORD_ENABLED`
+- `DISCORD_WEBHOOK_URL`
+
+**Monitoring**
+
+- `CHECK_INTERVAL` – Monitoring interval in seconds.
+
+## License
+
+This project is licensed under the MIT License. See the [`LICENSE`](LICENSE) file for more information.
