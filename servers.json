@@ -1,0 +1,28 @@
+{
+    "servers": [
+        {
+            "name": "Hypixel",
+            "ip": "mc.hypixel.net",
+            "port": 25565,
+            "type": "Minecraft"
+        },
+        {
+            "name": "FakePixel",
+            "ip": "mc.fakepixel.fun",
+            "port": 25565,
+            "type": "Minecraft"
+        },
+        {
+            "name": "Blocksmc",
+            "ip": "play.blocksmc.com",
+            "port": 25565,
+            "type": "Minecraft"
+        },
+        {
+            "name": "Discord",
+            "ip": "discord.com",
+            "port": 80,
+            "type": "Website"
+        }
+    ]
+}
